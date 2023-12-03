@@ -1,6 +1,6 @@
 /*
 Advent of code puzzle 01 pt 2
-described here: https://github.com/autotunafish/advent_of_code23/blob/main/puzzle01_pt2
+https://github.com/autotunafish/advent_of_code23/blob/main/puzzle_01-pt2
 
 Similar to last time buut now we need to match on numbers as 'strings' besides just numbers as 'chars'. 
 We'll still read the input as a string, remove the zeroeth element until we match to a number as char. 
