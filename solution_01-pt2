@@ -3,7 +3,13 @@ Advent of code puzzle 01 pt 2
 described here: https://github.com/autotunafish/advent_of_code23/blob/main/puzzle01_pt2
 
 Similar to last time buut now we need to match on numbers as 'strings' besides just numbers as 'chars'. 
-We'll still read the input as a string, remove the zeroeth element until we match to a number as char. We'll also match to a contained word. This will contain all the values, not just number chars, since we need them this time. Once either is found, it sets a bool fword or rword and pushes the 'char' to 'hold' string. Else, push and store all the other chars into 'wordval' and continue remove zeroeth push and store until the \n. Then pop last on 'wordval', clone and push to 'revwordval'. Match 'revwordval' to the word and the clone to a number char. If either match, push the char to 'hold' and set 'rword' high. If 'rword' is high, remove and pop char to 'hold', parse to int and, clear srings and reset bools then continue until the line is exhausted. Add the integers for the 'runsum'.
+We'll still read the input as a string, remove the zeroeth element until we match to a number as char. 
+We'll also match to a contained word. This will contain all the values, not just number chars, since we need them this time. 
+Once either is found, it sets a bool fword or rword and pushes the 'char' to 'hold' string. 
+Else, push and store all the other chars into 'wordval' and continue remove zeroeth push and store until the \n. 
+Then pop last on 'wordval', clone and push to 'revwordval'. Match 'revwordval' to the word and the clone to a number char. 
+If either match, push the char to 'hold' and set 'rword' high. If 'rword' is high, remove and pop char to 'hold', parse to int and, 
+clear srings and reset bools then continue until the line is exhausted. Add the integers for the 'runsum'.
 
 */
 
