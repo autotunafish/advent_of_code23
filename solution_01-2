@@ -1,0 +1,161 @@
+/*
+Advent of code puzzle 01 pt 2
+described here: https://github.com/autotunafish/advent_of_code23/blob/main/puzzle01_pt2
+
+Similar to last time buut now we need to match on numbers as 'strings' besides just numbers as 'chars'. 
+We'll still read the input as a string, remove the zeroeth element until we match to a number as char. We'll also match to a contained word. This will contain all the values, not just number chars, since we need them this time. Once either is found, it sets a bool fword or rword and pushes the 'char' to 'hold' string. Else, push and store all the other chars into 'wordval' and continue remove zeroeth push and store until the \n. Then pop last on 'wordval', clone and push to 'revwordval'. Match 'revwordval' to the word and the clone to a number char. If either match, push the char to 'hold' and set 'rword' high. If 'rword' is high, remove and pop char to 'hold', parse to int and, clear srings and reset bools then continue until the line is exhausted. Add the integers for the 'runsum'.
+
+*/
+
+
+use std::fs;
+
+fn main() {
+    let mut hold = String::new();
+    let mut catval = String::new();
+    let mut wordval = String::new();
+    let mut revwordval = String::new();
+    let mut fword = 0;
+    let mut rword = 0;
+    let mut runsum = 0;
+    let infile = String::from("input01.txt");
+    let mut pz_in = fs::read_to_string(&infile).unwrap();
+    //println!("{}", &pz_in);
+    loop {
+        if pz_in.len() == 0 {
+            break;
+        }
+        let i = pz_in.remove(0);
+        let j = i.clone();
+        wordval.push(j);
+        if fword == 0 {
+            if wordval.contains("one") {
+                hold.push('1');
+                fword = 1;
+            } else if wordval.contains("two") {
+                hold.push('2');
+                fword = 1;
+            } else if wordval.contains("three") {
+                hold.push('3');
+                fword = 1;
+            } else if wordval.contains("four") {
+                hold.push('4');
+                fword = 1;
+            } else if wordval.contains("five") {
+                hold.push('5');
+                fword = 1;
+            } else if wordval.contains("six") {
+                hold.push('6');
+                fword = 1;
+            } else if wordval.contains("seven") {
+                hold.push('7');
+                fword = 1;
+            } else if wordval.contains("eight") {
+                hold.push('8');
+                fword = 1;
+            } else if wordval.contains("nine") {
+                hold.push('9');
+                fword = 1;
+            } else if wordval.contains("zero") {
+                hold.push('0');
+                fword = 1;
+            }
+            //println!("wordval {}", &wordval);
+        }
+        match i {
+            '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '0' => {
+                //println!("i {}", &i);
+                let leech = i.clone();
+                hold.push(leech);
+            }
+            '\n' => {
+                //println!("wv: {}", &wordval);
+                loop {
+                    if wordval.len() == 0 {
+                        break;
+                    }
+                    let squito = wordval.pop().unwrap();
+                    let tick = squito.clone();
+                    //println!("tick {}", &tick);
+                    revwordval.insert(0, squito);
+                    //println!("rwv: {}", &revwordval);
+
+                    if rword == 0 {
+                        if revwordval.contains("one") {
+                            hold.push('1');
+                            revwordval.clear();
+                            rword = 1;
+                        } else if revwordval.contains("two") {
+                            hold.push('2');
+                            revwordval.clear();
+                            rword = 1;
+                        } else if revwordval.contains("three") {
+                            hold.push('3');
+                            revwordval.clear();
+                            rword = 1;
+                        } else if revwordval.contains("four") {
+                            hold.push('4');
+                            revwordval.clear();
+                            rword = 1;
+                        } else if revwordval.contains("five") {
+                            hold.push('5');
+                            revwordval.clear();
+                            rword = 1;
+                        } else if revwordval.contains("six") {
+                            hold.push('6');
+                            revwordval.clear();
+                            rword = 1;
+                        } else if revwordval.contains("seven") {
+                            hold.push('7');
+                            revwordval.clear();
+                            rword = 1;
+                        } else if revwordval.contains("eight") {
+                            hold.push('8');
+                            revwordval.clear();
+                            rword = 1;
+                        } else if revwordval.contains("nine") {
+                            hold.push('9');
+                            revwordval.clear();
+                            rword = 1;
+                        } else if revwordval.contains("zero") {
+                            hold.push('0');
+                            revwordval.clear();
+                            rword = 1;
+                        }
+                        //println!("revwordval {}", &revwordval);
+                        //println!("hold {}", &hold);
+                        match tick {
+                            '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '0' => {
+                                let tock = tick.clone();
+                                hold.push(tock);
+                                rword = 1;
+                            }
+                            _ => (),
+                        }
+                    }
+                    if rword == 1 {
+                        //println!("**hold {}", &hold);
+                        let flea = hold.remove(0);
+                        catval.push(flea);
+                        let edge = hold.pop().unwrap();
+                        catval.push(edge);
+                        //println!("hold {}", &hold);
+                        //println!("catval {}", &catval);
+                        let catsum = catval.parse::<i32>().unwrap();
+                        runsum += catsum;
+                        hold.clear();
+                        catval.clear();
+                        fword = 0;
+                        rword = 0;
+                        wordval.clear();
+                        revwordval.clear();
+                    }
+                    continue;
+                }
+            }
+            _ => (),
+        }
+        continue;
+    }
+    println!("runsum {}", &runsum);
+}
