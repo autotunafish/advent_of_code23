@@ -1,0 +1,180 @@
+/*
+Advent of code puzzle 02
+described here: https://github.com/autotunafish/advent_of_code23/blob/main/puzzle02
+
+
+We'll first read the input as a string. The input is a series of lines
+and we need to evaluate them for a contained maximum color value. If exceeded then the line is invalid. 
+Otherwise the identifier to the valid line will be parsed and summed. The identifier and evaluated 
+values can be multiple digits in length (max identifier is '100'), but otherwise nicely formatted so we 
+can skip some checks. We'll go through the line by removing the zeroeth and pushing to a 'wordval', 
+until the \n is reached. During that process of removing zeroeth, the identifier is collected by 
+matching ':' and the check on the maximum values against the collected string values by matching "blue", 
+"red" or "green". They are parsed to be evaluated with >= to their respective maximum of 12 red, 13 
+green and 14 blue, +1. If over then set valid low. Else, continue until \n, check valid is high and if 
+so, parse and add the identifier to runsum. Reset all values and loop until the whole input string is 
+exhausted, print runsum.
+
+*/
+
+use std::fs;
+
+fn main() {
+    let mut runsum = 0;
+    let mut valid = 1;
+    let mut wordval = String::new();
+    let mut ident = String::new();
+    let mut bval = String::new();
+    let infile = String::from("input02.txt");
+    let mut pz_in = fs::read_to_string(&infile).unwrap();
+
+    loop {
+        if pz_in.len() == 0 {
+            break;
+        }
+        let i = pz_in.remove(0);
+        let j = i.clone();
+        wordval.push(j);
+
+        if wordval.contains(":") {
+            wordval.pop();
+            let bugsy = wordval.pop().unwrap();
+            let mumbles = wordval.pop().unwrap();
+            let bigboy = wordval.pop().unwrap();
+            match bugsy {
+                '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '0' => {
+                    let leech = bugsy.clone();
+                    ident.insert(0, leech);
+                }
+
+                _ => (),
+            }
+            match mumbles {
+                '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '0' => {
+                    let leech = mumbles.clone();
+                    ident.insert(0, leech);
+                }
+
+                _ => (),
+            }
+            match bigboy {
+                '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '0' => {
+                    let leech = bigboy.clone();
+                    ident.insert(0, leech);
+                }
+
+                _ => (),
+            }
+            wordval.clear();
+        }
+
+        if wordval.contains("blue") {
+            wordval.pop();
+            wordval.pop();
+            wordval.pop();
+            wordval.pop();
+            wordval.pop();
+            let bugsy = wordval.pop().unwrap();
+            let mumbles = wordval.pop().unwrap();
+            match bugsy {
+                '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '0' => {
+                    let leech = bugsy.clone();
+                    bval.insert(0, leech);
+                }
+
+                _ => (),
+            }
+            match mumbles {
+                '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '0' => {
+                    let leech = mumbles.clone();
+                    bval.insert(0, leech);
+                }
+
+                _ => (),
+            }
+
+            let bsum = bval.parse::<i32>().unwrap();
+            if bsum >= 15 {
+                valid = 0;
+            }
+            bval.clear();
+        }
+
+        if wordval.contains("red") {
+            wordval.pop();
+            wordval.pop();
+            wordval.pop();
+            wordval.pop();
+            let bugsy = wordval.pop().unwrap();
+            let mumbles = wordval.pop().unwrap();
+            match bugsy {
+                '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '0' => {
+                    let leech = bugsy.clone();
+                    bval.insert(0, leech);
+                }
+
+                _ => (),
+            }
+            match mumbles {
+                '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '0' => {
+                    let leech = mumbles.clone();
+                    bval.insert(0, leech);
+                }
+
+                _ => (),
+            }
+
+            let bsum = bval.parse::<i32>().unwrap();
+            if bsum >= 13 {
+                valid = 0;
+            }
+            bval.clear();
+        }
+
+        if wordval.contains("green") {
+            wordval.pop();
+            wordval.pop();
+            wordval.pop();
+            wordval.pop();
+            wordval.pop();
+            wordval.pop();
+            let bugsy = wordval.pop().unwrap();
+            let mumbles = wordval.pop().unwrap();
+            match bugsy {
+                '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '0' => {
+                    let leech = bugsy.clone();
+                    bval.insert(0, leech);
+                }
+
+                _ => (),
+            }
+            match mumbles {
+                '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '0' => {
+                    let leech = mumbles.clone();
+                    bval.insert(0, leech);
+                }
+
+                _ => (),
+            }
+
+            let bsum = bval.parse::<i32>().unwrap();
+            if bsum >= 14 {
+                valid = 0;
+            }
+            bval.clear();
+        }
+
+        if i == '\n' {
+            if valid == 1 {
+                let sumdent = ident.parse::<i32>().unwrap();
+                runsum += sumdent;
+            }
+            valid = 1;
+            ident.clear();
+            wordval.clear();
+            bval.clear();
+        }
+        continue;
+    }
+    println!("{:?}", &runsum);
+}
