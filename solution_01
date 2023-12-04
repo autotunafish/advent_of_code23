@@ -1,5 +1,4 @@
 /*
-Run as main.rs cargo bin
 
 Advent of code puzzle 01
 described here: https://github.com/autotunafish/advent_of_code23/blob/main/puzzle_01
@@ -19,7 +18,6 @@ fn main() {
     let mut runsum = 0;
     let infile = String::from("input01.txt");
     let mut pz_in = fs::read_to_string(&infile).unwrap();
-    //println!("{}", &pz_in);
     loop {
         if pz_in.len() == 0 {
             break;
@@ -27,12 +25,10 @@ fn main() {
         let i = pz_in.remove(0);
         match i {
             '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '0' => {
-                //println!("{}", &i);
                 let leech = i.clone();
                 hold.push(leech);
             }
             '\n' => {
-                //println!("{}", &hold);
                 let tick = hold.pop().unwrap();
                 let mut tock = tick.clone();
                 if hold.len() <= 0 {
@@ -41,8 +37,6 @@ fn main() {
                 let flea = hold.remove(0);
                 catval.push(flea);
                 catval.push(tick);
-                //println!("hold {}", &hold);
-                //println!("catval {}", &catval);
                 let catsum = catval.parse::<i32>().unwrap();
                 runsum += catsum;
                 hold.clear();
